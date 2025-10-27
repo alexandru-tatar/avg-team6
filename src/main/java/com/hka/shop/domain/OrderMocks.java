@@ -13,10 +13,10 @@ public final class OrderMocks {
   public static Order electronicsOrder() {
     return Order.builder()
         .orderId("ORD-1001")
-        .customer(customer("CUST-1001", "Anna", "Mueller"))
+        .customer(customer("CUST-1001", "Andreas", "Heberle"))
         .addItem(item("PRD-101", 1, "1299.00"))
         .addItem(item("PRD-205", 2, "199.50"))
-        .shippingAddress(address("Hauptstrasse 12", "Stuttgart", "70173", "DE"))
+        .shippingAddress(address("Hauptstrasse 12", "Karlsruhe", "76131", "DE"))
         .status(OrderStatus.PAID)
         .build();
   }
@@ -24,11 +24,11 @@ public final class OrderMocks {
   public static Order groceryOrder() {
     return Order.builder()
         .orderId("ORD-1002")
-        .customer(customer("CUST-1002", "Bastian", "Schmidt"))
+        .customer(customer("CUST-1002", "Alexandru", "Tatar"))
         .addItem(item("PRD-310", 6, "2.49"))
         .addItem(item("PRD-311", 2, "4.90"))
         .addItem(item("PRD-450", 1, "18.75"))
-        .shippingAddress(address("Marktplatz 5", "Heidelberg", "69117", "DE"))
+        .shippingAddress(address("Marktplatz 5", "Gernsbach", "76593", "DE"))
         .status(OrderStatus.SHIPPED)
         .build();
   }
@@ -36,7 +36,7 @@ public final class OrderMocks {
   public static Order cancelledOrder() {
     return Order.builder()
         .orderId("ORD-1003")
-        .customer(customer("CUST-1003", "Carla", "Neumann"))
+        .customer(customer("CUST-1003", "Antonio", "Codrean"))
         .addItem(item("PRD-808", 1, "89.95"))
         .shippingAddress(address("Bahnhofstrasse 20", "Karlsruhe", "76133", "DE"))
         .status(OrderStatus.CANCELLED)
