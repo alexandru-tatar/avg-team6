@@ -1,9 +1,14 @@
 package com.hka.shop.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
 
+@JsonDeserialize(builder = Order.Builder.class)
 public final class Order {
   private final String orderId;
   private final Customer customer;
@@ -53,6 +58,7 @@ public final class Order {
         .status(o.status);
   }
 
+  @JsonPOJOBuilder(withPrefix = "")
   public static final class Builder {
     private String orderId;
     private Customer customer;
@@ -61,12 +67,21 @@ public final class Order {
     private ShippingAddress shippingAddress;
     private OrderStatus status;
 
+    @JsonProperty("orderId")
     public Builder orderId(String v){ this.orderId = v; return this; }
+    @JsonProperty("customer")
     public Builder customer(Customer v){ this.customer = v; return this; }
     public Builder addItem(OrderItem v){ this.items.add(v); return this; }
-    public Builder items(Collection<OrderItem> v){ this.items = new ArrayList<>(v); return this; }
+    @JsonProperty("items")
+    public Builder items(Collection<OrderItem> v){
+      this.items = v == null ? new ArrayList<>() : new ArrayList<>(v);
+      return this;
+    }
+    @JsonProperty("totalAmount")
     public Builder totalAmount(BigDecimal v){ this.totalAmount = v; return this; }
+    @JsonProperty("shippingAddress")
     public Builder shippingAddress(ShippingAddress v){ this.shippingAddress = v; return this; }
+    @JsonProperty("status")
     public Builder status(OrderStatus v){ this.status = v; return this; }
     public Order build() {
         if (orderId == null || orderId.isBlank()) {

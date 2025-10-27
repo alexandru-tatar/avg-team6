@@ -1,5 +1,10 @@
 package com.hka.shop.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
+@JsonDeserialize(builder = Customer.Builder.class)
 public final class Customer {
   private final String customerId;
   private final String prename;
@@ -17,10 +22,14 @@ public final class Customer {
   public String getName()       { return name; }
 
   public static Builder builder() { return new Builder(); }
+  @JsonPOJOBuilder(withPrefix = "")
   public static final class Builder {
     private String customerId, prename, name;
+    @JsonProperty("customerId")
     public Builder customerId(String v){ this.customerId = v; return this; }
+    @JsonProperty("prename")
     public Builder prename(String v){ this.prename = v; return this; }
+    @JsonProperty("name")
     public Builder name(String v){ this.name = v; return this; }
     public Customer build(){ return new Customer(this); }
   }
