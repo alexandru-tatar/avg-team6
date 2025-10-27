@@ -1,0 +1,9 @@
+/Users/alexandru-tatar/Documents/GitHub/avg-oms/avg-team6/src/main/java/com/hka/shop/App.java
+/Users/alexandru-tatar/Documents/GitHub/avg-oms/avg-team6/src/main/java/com/hka/shop/controller/OrderController.java
+/Users/alexandru-tatar/Documents/GitHub/avg-oms/avg-team6/src/main/java/com/hka/shop/domain/Customer.java
+/Users/alexandru-tatar/Documents/GitHub/avg-oms/avg-team6/src/main/java/com/hka/shop/domain/Order.java
+/Users/alexandru-tatar/Documents/GitHub/avg-oms/avg-team6/src/main/java/com/hka/shop/domain/OrderItem.java
+/Users/alexandru-tatar/Documents/GitHub/avg-oms/avg-team6/src/main/java/com/hka/shop/domain/OrderMocks.java
+/Users/alexandru-tatar/Documents/GitHub/avg-oms/avg-team6/src/main/java/com/hka/shop/domain/OrderStatus.java
+/Users/alexandru-tatar/Documents/GitHub/avg-oms/avg-team6/src/main/java/com/hka/shop/domain/ShippingAddress.java
+/Users/alexandru-tatar/Documents/GitHub/avg-oms/avg-team6/src/main/java/com/hka/shop/service/OrderService.java
