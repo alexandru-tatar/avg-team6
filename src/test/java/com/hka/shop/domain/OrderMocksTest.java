@@ -2,6 +2,13 @@ package com.hka.shop.domain;
 
 import org.junit.jupiter.api.Test;
 
+import com.hka.oms.domain.Customer;
+import com.hka.oms.domain.Order;
+import com.hka.oms.domain.OrderItem;
+import com.hka.oms.domain.OrderMocks;
+import com.hka.oms.domain.OrderStatus;
+import com.hka.oms.domain.ShippingAddress;
+
 import java.math.BigDecimal;
 import java.util.List;
 
