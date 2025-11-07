@@ -5,3 +5,6 @@ payment:
   base-url: http://localhost:8083
   currency: EUR
   method: CARD
+
+wms:
+  base-url: http://localhost:8084

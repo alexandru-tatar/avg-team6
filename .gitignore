@@ -86,3 +86,5 @@ coverage
 !.vscode/extensions.json
 target/
 *.class
+target/
+*.class
