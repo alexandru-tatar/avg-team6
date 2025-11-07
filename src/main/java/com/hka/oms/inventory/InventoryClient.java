@@ -71,4 +71,16 @@ public class InventoryClient {
   public void shutdown() {
     channel.shutdownNow();
   }
+
+  public void releaseReservation(String orderId) {
+    try {
+      blockingStub.releaseReservation(
+          Inventory.ReleaseReservationRequest.newBuilder()
+              .setOrderId(orderId)
+              .build());
+      log.info("Released inventory reservation for order {}", orderId);
+    } catch (StatusRuntimeException ex) {
+      log.error("Failed to release inventory reservation for order {}", orderId, ex);
+    }
+  }
 }

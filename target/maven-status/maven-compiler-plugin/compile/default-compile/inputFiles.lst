@@ -1,5 +1,5 @@
 /Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/App.java
-/Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/controller/InventoryExceptionHandler.java
+/Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/controller/ApiExceptionHandler.java
 /Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/controller/OrderController.java
 /Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/domain/Customer.java
 /Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/domain/Order.java
@@ -8,6 +8,14 @@
 /Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/domain/OrderStatus.java
 /Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/domain/ShippingAddress.java
 /Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/inventory/InventoryClient.java
+/Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/payment/PaymentClient.java
+/Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/payment/PaymentException.java
+/Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/payment/PaymentProperties.java
+/Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/payment/dto/PaymentAuthorizeRequest.java
+/Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/payment/dto/PaymentCaptureRequest.java
+/Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/payment/dto/PaymentRefundRequest.java
+/Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/payment/dto/PaymentResponse.java
+/Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/payment/dto/PaymentStatus.java
 /Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/service/InventoryUnavailableException.java
 /Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/service/OrderCreationResult.java
 /Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/service/OrderService.java

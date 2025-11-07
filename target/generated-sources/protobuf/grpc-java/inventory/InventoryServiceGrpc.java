@@ -74,6 +74,37 @@ public final class InventoryServiceGrpc {
     return getReserveItemsMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<inventory.Inventory.ReleaseReservationRequest,
+      inventory.Inventory.ReleaseReservationResponse> getReleaseReservationMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "ReleaseReservation",
+      requestType = inventory.Inventory.ReleaseReservationRequest.class,
+      responseType = inventory.Inventory.ReleaseReservationResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<inventory.Inventory.ReleaseReservationRequest,
+      inventory.Inventory.ReleaseReservationResponse> getReleaseReservationMethod() {
+    io.grpc.MethodDescriptor<inventory.Inventory.ReleaseReservationRequest, inventory.Inventory.ReleaseReservationResponse> getReleaseReservationMethod;
+    if ((getReleaseReservationMethod = InventoryServiceGrpc.getReleaseReservationMethod) == null) {
+      synchronized (InventoryServiceGrpc.class) {
+        if ((getReleaseReservationMethod = InventoryServiceGrpc.getReleaseReservationMethod) == null) {
+          InventoryServiceGrpc.getReleaseReservationMethod = getReleaseReservationMethod =
+              io.grpc.MethodDescriptor.<inventory.Inventory.ReleaseReservationRequest, inventory.Inventory.ReleaseReservationResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "ReleaseReservation"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  inventory.Inventory.ReleaseReservationRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  inventory.Inventory.ReleaseReservationResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new InventoryServiceMethodDescriptorSupplier("ReleaseReservation"))
+              .build();
+        }
+      }
+    }
+    return getReleaseReservationMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -150,6 +181,13 @@ public final class InventoryServiceGrpc {
         io.grpc.stub.StreamObserver<inventory.Inventory.ReserveItemsResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getReserveItemsMethod(), responseObserver);
     }
+
+    /**
+     */
+    default void releaseReservation(inventory.Inventory.ReleaseReservationRequest request,
+        io.grpc.stub.StreamObserver<inventory.Inventory.ReleaseReservationResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getReleaseReservationMethod(), responseObserver);
+    }
   }
 
   /**
@@ -194,6 +232,14 @@ public final class InventoryServiceGrpc {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getReserveItemsMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void releaseReservation(inventory.Inventory.ReleaseReservationRequest request,
+        io.grpc.stub.StreamObserver<inventory.Inventory.ReleaseReservationResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getReleaseReservationMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -225,6 +271,13 @@ public final class InventoryServiceGrpc {
       return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getReserveItemsMethod(), getCallOptions(), request);
     }
+
+    /**
+     */
+    public inventory.Inventory.ReleaseReservationResponse releaseReservation(inventory.Inventory.ReleaseReservationRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+          getChannel(), getReleaseReservationMethod(), getCallOptions(), request);
+    }
   }
 
   /**
@@ -255,6 +308,13 @@ public final class InventoryServiceGrpc {
     public inventory.Inventory.ReserveItemsResponse reserveItems(inventory.Inventory.ReserveItemsRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getReserveItemsMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public inventory.Inventory.ReleaseReservationResponse releaseReservation(inventory.Inventory.ReleaseReservationRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getReleaseReservationMethod(), getCallOptions(), request);
     }
   }
 
@@ -289,10 +349,19 @@ public final class InventoryServiceGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getReserveItemsMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<inventory.Inventory.ReleaseReservationResponse> releaseReservation(
+        inventory.Inventory.ReleaseReservationRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getReleaseReservationMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_CHECK_AVAILABILITY = 0;
   private static final int METHODID_RESERVE_ITEMS = 1;
+  private static final int METHODID_RELEASE_RESERVATION = 2;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -318,6 +387,10 @@ public final class InventoryServiceGrpc {
         case METHODID_RESERVE_ITEMS:
           serviceImpl.reserveItems((inventory.Inventory.ReserveItemsRequest) request,
               (io.grpc.stub.StreamObserver<inventory.Inventory.ReserveItemsResponse>) responseObserver);
+          break;
+        case METHODID_RELEASE_RESERVATION:
+          serviceImpl.releaseReservation((inventory.Inventory.ReleaseReservationRequest) request,
+              (io.grpc.stub.StreamObserver<inventory.Inventory.ReleaseReservationResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -351,6 +424,13 @@ public final class InventoryServiceGrpc {
               inventory.Inventory.ReserveItemsRequest,
               inventory.Inventory.ReserveItemsResponse>(
                 service, METHODID_RESERVE_ITEMS)))
+        .addMethod(
+          getReleaseReservationMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              inventory.Inventory.ReleaseReservationRequest,
+              inventory.Inventory.ReleaseReservationResponse>(
+                service, METHODID_RELEASE_RESERVATION)))
         .build();
   }
 
@@ -401,6 +481,7 @@ public final class InventoryServiceGrpc {
               .setSchemaDescriptor(new InventoryServiceFileDescriptorSupplier())
               .addMethod(getCheckAvailabilityMethod())
               .addMethod(getReserveItemsMethod())
+              .addMethod(getReleaseReservationMethod())
               .build();
         }
       }

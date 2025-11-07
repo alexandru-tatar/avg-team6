@@ -5,6 +5,7 @@ package inventory;
 service InventoryService {
     rpc CheckAvailability(CheckAvailabilityRequest) returns (CheckAvailabilityResponse);
     rpc ReserveItems(ReserveItemsRequest) returns (ReserveItemsResponse);
+    rpc ReleaseReservation(ReleaseReservationRequest) returns (ReleaseReservationResponse);
 }
 
 message CheckAvailabilityRequest {
@@ -22,6 +23,15 @@ message ReserveItemsRequest {
 }
 
 message ReserveItemsResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message ReleaseReservationRequest {
+    string order_id = 1;
+}
+
+message ReleaseReservationResponse {
     bool success = 1;
     string message = 2;
 }
