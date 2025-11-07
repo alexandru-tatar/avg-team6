@@ -88,3 +88,5 @@ target/
 *.class
 target/
 *.class
+target/
+*.class
