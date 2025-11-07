@@ -1,0 +1,7 @@
+server:
+  port: 8080
+
+payment:
+  base-url: http://localhost:8083
+  currency: EUR
+  method: CARD

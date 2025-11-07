@@ -6,6 +6,10 @@ import org.springframework.stereotype.Service;
 
 import com.hka.oms.domain.*;
 import com.hka.oms.inventory.InventoryClient;
+import com.hka.oms.payment.PaymentClient;
+import com.hka.oms.payment.PaymentException;
+import com.hka.oms.payment.dto.PaymentAuthorizeRequest;
+import com.hka.oms.payment.dto.PaymentResponse;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -19,9 +23,11 @@ public class OrderService {
   private static final Logger log = LoggerFactory.getLogger(OrderService.class);
   private final Map<String, Order> store = new ConcurrentHashMap<>();
   private final InventoryClient inventoryClient;
+  private final PaymentClient paymentClient;
 
-  public OrderService(InventoryClient inventoryClient) {
+  public OrderService(InventoryClient inventoryClient, PaymentClient paymentClient) {
     this.inventoryClient = inventoryClient;
+    this.paymentClient = paymentClient;
   }
 
   public OrderCreationResult create(Order incoming) {
@@ -40,11 +46,29 @@ public class OrderService {
 
     log.info("Inventory reserved for {} -> {}", withId.getOrderId(), reservation.getMessage());
 
-    Order existing = store.putIfAbsent(withId.getOrderId(), withId);
-    if (existing != null) {
-      throw new IllegalStateException("order already exists: " + withId.getOrderId());
+    PaymentAuthorizeRequest paymentRequest = new PaymentAuthorizeRequest(
+        withId.getOrderId(),
+        withId.getTotalAmount(),
+        paymentClient.properties().currency(),
+        paymentClient.properties().method()
+    );
+    try {
+      PaymentResponse payment = paymentClient.authorize(paymentRequest, withId.getOrderId());
+      Order paidOrder = withId.withStatus(OrderStatus.PAID);
+
+      Order existing = store.putIfAbsent(paidOrder.getOrderId(), paidOrder);
+      if (existing != null) {
+        throw new IllegalStateException("order already exists: " + paidOrder.getOrderId());
+      }
+      return new OrderCreationResult(paidOrder, reservation.getMessage(), payment);
+    } catch (PaymentException ex) {
+      log.warn("Payment failed for order {}, releasing inventory", withId.getOrderId());
+      inventoryClient.releaseReservation(withId.getOrderId());
+      throw ex;
+    } catch (RuntimeException ex) {
+      inventoryClient.releaseReservation(withId.getOrderId());
+      throw ex;
     }
-    return new OrderCreationResult(withId, reservation.getMessage());
   }
 
   public Order get(String orderId) {
