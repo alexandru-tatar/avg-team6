@@ -84,9 +84,3 @@ coverage
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-target/
-*.class
-target/
-*.class
-target/
-*.class
