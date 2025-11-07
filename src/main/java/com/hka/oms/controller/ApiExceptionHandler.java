@@ -2,6 +2,7 @@ package com.hka.oms.controller;
 
 import com.hka.oms.payment.PaymentException;
 import com.hka.oms.service.InventoryUnavailableException;
+import com.hka.oms.wms.WmsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,13 @@ public class ApiExceptionHandler {
   public ResponseEntity<Map<String, Object>> handlePaymentException(PaymentException ex) {
     HttpStatus status = ex.getStatus() == null ? HttpStatus.BAD_GATEWAY : ex.getStatus();
     log.warn("Payment error ({}): {}", status.value(), ex.getMessage());
+    return build(status, ex.getMessage());
+  }
+
+  @ExceptionHandler(WmsException.class)
+  public ResponseEntity<Map<String, Object>> handleWmsException(WmsException ex) {
+    HttpStatus status = ex.getStatus() == null ? HttpStatus.BAD_GATEWAY : ex.getStatus();
+    log.warn("WMS error ({}): {}", status.value(), ex.getMessage());
     return build(status, ex.getMessage());
   }
 

@@ -19,5 +19,14 @@
 /Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/service/InventoryUnavailableException.java
 /Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/service/OrderCreationResult.java
 /Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/service/OrderService.java
+/Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/wms/WmsClient.java
+/Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/wms/WmsException.java
+/Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/wms/WmsProperties.java
+/Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/wms/dto/WmsCompletePickingRequest.java
+/Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/wms/dto/WmsCreateFulfillmentRequest.java
+/Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/wms/dto/WmsFulfillmentResponse.java
+/Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/wms/dto/WmsPackRequest.java
+/Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/wms/dto/WmsShipRequest.java
+/Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/src/main/java/com/hka/oms/wms/dto/WmsStartPickingRequest.java
 /Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/target/generated-sources/protobuf/grpc-java/inventory/InventoryServiceGrpc.java
 /Users/alexandru-tatar/Documents/GitHub/avg-team6/avg-oms/target/generated-sources/protobuf/java/inventory/Inventory.java

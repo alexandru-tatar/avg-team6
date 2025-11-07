@@ -10,6 +10,9 @@ import com.hka.oms.payment.PaymentClient;
 import com.hka.oms.payment.PaymentException;
 import com.hka.oms.payment.dto.PaymentAuthorizeRequest;
 import com.hka.oms.payment.dto.PaymentResponse;
+import com.hka.oms.wms.WmsClient;
+import com.hka.oms.wms.WmsException;
+import com.hka.oms.wms.dto.WmsFulfillmentResponse;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -24,10 +27,12 @@ public class OrderService {
   private final Map<String, Order> store = new ConcurrentHashMap<>();
   private final InventoryClient inventoryClient;
   private final PaymentClient paymentClient;
+  private final WmsClient wmsClient;
 
-  public OrderService(InventoryClient inventoryClient, PaymentClient paymentClient) {
+  public OrderService(InventoryClient inventoryClient, PaymentClient paymentClient, WmsClient wmsClient) {
     this.inventoryClient = inventoryClient;
     this.paymentClient = paymentClient;
+    this.wmsClient = wmsClient;
   }
 
   public OrderCreationResult create(Order incoming) {
@@ -54,15 +59,16 @@ public class OrderService {
     );
     try {
       PaymentResponse payment = paymentClient.authorize(paymentRequest, withId.getOrderId());
+      WmsFulfillmentResponse fulfillment = wmsClient.orchestrateFulfillment(withId, withId.getOrderId());
       Order paidOrder = withId.withStatus(OrderStatus.PAID);
 
       Order existing = store.putIfAbsent(paidOrder.getOrderId(), paidOrder);
       if (existing != null) {
         throw new IllegalStateException("order already exists: " + paidOrder.getOrderId());
       }
-      return new OrderCreationResult(paidOrder, reservation.getMessage(), payment);
-    } catch (PaymentException ex) {
-      log.warn("Payment failed for order {}, releasing inventory", withId.getOrderId());
+      return new OrderCreationResult(paidOrder, reservation.getMessage(), payment, fulfillment);
+    } catch (PaymentException | WmsException ex) {
+      log.warn("Downstream failure for order {}, releasing inventory", withId.getOrderId());
       inventoryClient.releaseReservation(withId.getOrderId());
       throw ex;
     } catch (RuntimeException ex) {
