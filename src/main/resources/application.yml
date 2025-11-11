@@ -7,4 +7,11 @@ payment:
   method: CARD
 
 wms:
-  base-url: http://localhost:8084
+  base-url: http://localhost:8084 
+
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest

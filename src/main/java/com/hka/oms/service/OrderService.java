@@ -10,9 +10,7 @@ import com.hka.oms.payment.PaymentClient;
 import com.hka.oms.payment.PaymentException;
 import com.hka.oms.payment.dto.PaymentAuthorizeRequest;
 import com.hka.oms.payment.dto.PaymentResponse;
-import com.hka.oms.wms.WmsClient;
-import com.hka.oms.wms.WmsException;
-import com.hka.oms.wms.dto.WmsFulfillmentResponse;
+import com.hka.oms.publisher.WmsPublisher;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -33,12 +31,12 @@ public class OrderService {
   private final Map<String, Order> store = new ConcurrentHashMap<>();
   private final InventoryClient inventoryClient;
   private final PaymentClient paymentClient;
-  private final WmsClient wmsClient;
+  private final WmsPublisher wmsPublisher;
 
-  public OrderService(InventoryClient inventoryClient, PaymentClient paymentClient, WmsClient wmsClient) {
+  public OrderService(InventoryClient inventoryClient, PaymentClient paymentClient, WmsPublisher wmsPublisher) {
     this.inventoryClient = inventoryClient;
     this.paymentClient = paymentClient;
-    this.wmsClient = wmsClient;
+    this.wmsPublisher = wmsPublisher;
   }
 
   public OrderCreationResult create(Order incoming) {
@@ -58,12 +56,14 @@ public class OrderService {
 
     log.info("Inventory reserved for {} -> {}", withId.getOrderId(), reservation.getMessage());
 
-    return withReservationGuard(withId, () -> {
+    OrderCreationResult result = withReservationGuard(withId, () -> {
       PaymentResponse payment = paymentClient.authorize(buildPaymentRequest(withId), withId.getOrderId());
-      WmsFulfillmentResponse fulfillment = wmsClient.orchestrateFulfillment(withId, withId.getOrderId());
       Order stored = persist(withId.withStatus(OrderStatus.PAID));
-      return new OrderCreationResult(stored, reservation.getMessage(), payment, fulfillment);
+      return new OrderCreationResult(stored, reservation.getMessage(), payment);
     });
+
+    publishToWms(result);
+    return result;
   }
 
   public Order get(String orderId) {
@@ -164,7 +164,7 @@ public class OrderService {
   private <T> T withReservationGuard(Order order, Supplier<T> action) {
     try {
       return action.get();
-    } catch (PaymentException | WmsException ex) {
+    } catch (PaymentException ex) {
       log.warn("Downstream failure for order {}, releasing inventory", order.getOrderId());
       inventoryClient.releaseReservation(order.getOrderId());
       throw ex;
@@ -183,5 +183,12 @@ public class OrderService {
     }
     Optional.ofNullable(item.getPrice())
         .orElseThrow(() -> new IllegalArgumentException("price required"));
+  }
+  private void publishToWms(OrderCreationResult result) {
+    try {
+      wmsPublisher.publishOrderCreated(result);
+    } catch (RuntimeException ex) {
+      log.warn("Order {} created but failed to publish to WMS", result.order().getOrderId(), ex);
+    }
   }
 }
