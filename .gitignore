@@ -41,7 +41,6 @@ test/lasttest-locust/__pycache__
 test/lasttest-locust/.venv
 test/postman
 sonar-project.properties
-target
 
 # Logs
 log
@@ -84,3 +83,7 @@ coverage
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# Java / Maven
+target/
+*.class
